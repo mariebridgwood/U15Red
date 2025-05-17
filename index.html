@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>U13 Carrum Red</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>U13 Carrum Red</h1>
+
+<!-- Add links to other repositories -->
+<ul class="nav-list">
+
+  <li><a href="https://mariebridgwood.github.io/U15Red/" class="active">17 May 2021</a></li>
+
+</ul>
+
+
+
+  <div id="gallery" class="gallery"></div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" style="display:none;">
+    <span class="close">&times;</span>
+    <img src="" alt="Enlarged photo">
+    <button class="prev" onclick="changeImage(-1)">&#10094;</button>
+    <button class="next" onclick="changeImage(1)">&#10095;</button>
+  </div>
+
+  <script>
+    const imageList = [
+"DSC_0148.JPG", "DSC_0149.JPG", "DSC_0153.JPG", "DSC_0155.JPG", "DSC_0159.JPG", "DSC_0164.JPG", "DSC_0166.JPG", "DSC_0168.JPG", "DSC_0178.JPG", "DSC_0179.JPG", "DSC_0187.JPG", "DSC_0188.JPG", "DSC_0190.JPG", "DSC_0195.JPG", "DSC_0202.JPG", "DSC_0209.JPG", "DSC_0217.JPG", "DSC_0220.JPG", "DSC_0227.JPG", "DSC_0235.JPG", "DSC_0239.JPG", "DSC_0241.JPG", "DSC_0244.JPG", "DSC_0248.JPG", "DSC_0251.JPG", "DSC_0254.JPG", "DSC_0261.JPG", "DSC_0262.JPG", "DSC_0263.JPG", "DSC_026
+
+    ];
+
+    const gallery = document.getElementById("gallery");
+    let currentImageIndex = 0;
+
+    // Dynamically add images
+    imageList.forEach((filename, index) => {
+      const photoDiv = document.createElement('div');
+      photoDiv.className = 'photo';
+      photoDiv.innerHTML = `
+        <img src="images/${filename}" alt="${filename}" data-index="${index}">
+        <a href="images/${filename}" download>Download</a>
+      `;
+      gallery.appendChild(photoDiv);
+    });
+
+    // Lightbox elements
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImage = document.querySelector('.lightbox img');
+    const closeBtn = document.querySelector('.close');
+
+    // Toggle zoom on click inside the lightbox image
+lightboxImage.addEventListener('click', (e) => {
+  e.stopPropagation(); // Prevent closing lightbox when clicking image
+  lightboxImage.classList.toggle('zoomed');
+});
+
+
+    // Add event listeners AFTER adding images
+    const thumbnails = document.querySelectorAll('.gallery img');
+
+    function openLightbox(event) {
+      event.preventDefault();
+      currentImageIndex = Number(event.target.dataset.index);
+      updateLightboxImage();
+      lightbox.style.display = 'flex';
+    }
+
+    function updateLightboxImage() {
+      lightboxImage.src = `images/${imageList[currentImageIndex]}`;
+    }
+
+    function closeLightbox() {
+      lightbox.style.display = 'none';
+    }
+
+    function changeImage(direction) {
+      currentImageIndex += direction;
+      if (currentImageIndex < 0) {
+        currentImageIndex = imageList.length - 1;
+      } else if (currentImageIndex >= imageList.length) {
+        currentImageIndex = 0;
+      }
+      updateLightboxImage();
+    }
+
+    // Attach click events
+    thumbnails.forEach(thumbnail => {
+      thumbnail.addEventListener('click', openLightbox);
+    });
+
+    // Close lightbox when clicking outside the image or on close button
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox || e.target === closeBtn) {
+        closeLightbox();
+      }
+    });
+
+  </script>
+
+</body>
+</html>
