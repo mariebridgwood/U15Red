@@ -104,3 +104,22 @@ h1 {
   background-color: rgba(0, 0, 0, 0.5); /* Highlight on hover */
   border-radius: 50%;
 }
+
+.nav-list a {
+  font-size: 1.5em;
+  color: #0070f3;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  margin: 20px 0;
+}
+
+.nav-list a:hover {
+  text-decoration: underline;
+  color: #0059c1;
+}
+.nav-list {
+  list-style: none;
+  padding: 0;
+  text-align: center;
+}
